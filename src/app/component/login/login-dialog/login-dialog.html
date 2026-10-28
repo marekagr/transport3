@@ -1,0 +1,60 @@
+
+<!-- <tui-root> -->
+<div class="login-dialog-container">
+  <div class="dialog-header">
+    <img src="karetka.jpg" alt="Karetka pogotowia" class="header-image" />
+    <p class="dialog-subtitle">System transportu Wojewódzkiego Szpitala w Tarnobrzegu</p>
+  </div>
+
+  <form tuiForm 
+  /* [formGroup]="form"  */
+  /* (ngSubmit)="onSubmit()" class="login-form" */
+   /* (submit.prevent)="observer.complete()" */
+  >
+   
+    <div class="form-field">
+        <tui-textfield>
+	        <label tuiLabel>Zaloguj się d</label>
+	                <input	                    
+	                    tuiAutoFocus
+                tuiInput
+                [readonly]="true"  
+	                    /* tuiInput
+	                   formControlName="login"
+                       [readonly]="true" */
+	                />
+	    </tui-textfield>
+    </div>
+  
+    <!-- <div class="form-field">
+        <tui-textfield >
+	        <label tuiLabel>Hasło</label>
+	                <input	                    
+	                      type="password"
+	                    tuiInput 
+	                   formControlName="password"
+                       placeholder="••••••••"
+                        [readonly]="true"
+	                />
+                     <tui-icon tuiPassword />
+	    </tui-textfield>
+    
+
+      <tui-error formControlName="password"></tui-error>
+    </div>
+
+   -->
+    <div class="dialog-actions">
+     
+      <button
+        tuiButton
+        type="submit"
+        size="m"
+        appearance="accent"
+        [loading]="isLoading()"
+      >
+       Zaloguj
+      </button>
+    </div>
+  </form>
+</div>

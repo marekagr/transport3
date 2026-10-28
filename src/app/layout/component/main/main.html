@@ -1,0 +1,85 @@
+  
+   <div class="app-layout">
+      <!-- HEADER -->
+
+
+      <!-- BODY CONTAINER -->
+      <div class="app-body">
+        <!-- MOBILE BACKDROP -->
+        @if (isSidebarOpen()) {
+          <div class="sidebar-backdrop lg:hidden" (click)="toggleSidebar()"></div>
+        }
+
+        <!-- SIDEBAR -->
+        <aside class="app-sidebar" [class.open]="isSidebarOpen()" [style.width]="sidebarWidth()">
+          <div class="sidebar-content">
+            <p class="section-title">Navigation</p>
+            <nav class="nav-list">
+              @for (item of navItems; track item.label) {
+                <button
+                  class="nav-item"
+                  [class.active]="activeNav() === item.label"
+                  (click)="setActiveNav(item.label)"
+                >
+                  <span class="nav-icon" [innerHTML]="item.icon"></span>
+                  <span>{{ item.label }}</span>
+                </button>
+              }
+            </nav>
+          </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+          <div>
+            <div class="page-header">
+              <div>
+                <h1 class="page-title">{{ activeNav() }}</h1>
+                <p class="page-subtitle">Manage your dashboard workspace and active items.</p>
+              </div>
+              <div class="actions flex gap-2">
+                <button class="btn btn-secondary">
+                  <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Export Data
+                </button>
+                <button class="btn btn-primary">
+                  <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                  New Project
+                </button>
+              </div>
+            </div>
+
+            <!-- EMPTY DASHBOARD CANVAS -->
+            <div class="empty-canvas">
+              <div class="empty-icon-wrapper">
+                <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+              </div>
+              <h2 class="empty-title">Dashboard Empty</h2>
+              <p class="empty-description">There are no metrics or active modules added to this dashboard layout yet.</p>
+              <button class="btn btn-primary">
+                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Add Widget
+              </button>
+            </div>
+          </div>
+
+          <!-- FOOTER -->
+          <footer class="app-footer">
+            <p>&copy; 2026 NexusUI Inc. All rights reserved.</p>
+            <div class="footer-links">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+              <a href="#">Support</a>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>

@@ -1,0 +1,135 @@
+<div class="calendar-page-container">
+  <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+</div>
+
+<!-- Taiga UI Modal Layer Template -->
+<ng-template #newOrderDialog let-observer>
+ <form [formGroup]="eventForm" (ngSubmit)="saveEvent(observer)" class="dialog-form">
+    
+  <!-- Title Input -->
+    <!-- <tui-textfield class="form-row">
+      <label tuiLabel>Miejsce docelowe</label>
+      <input 
+        type="text" 
+        tuiInput
+        formControlName="target" 
+        placeholder="transport" 
+      />
+    </tui-textfield> -->
+    
+<div class="row">
+    <tui-textfield class="form-row">
+    <label tuiLabel>ID pacjenta</label>
+
+    <input
+      tuiInputNumber
+      formControlName="id_pac"
+      [min]="1"
+       [tuiNumberFormat]="{precision: 0}"
+        [readonly]="true"        
+    />
+  </tui-textfield>
+
+  <tui-textfield tuiChevron [stringify]="stringifyStatus" class="form-row"  >
+  <label tuiLabel>status</label>
+  
+  <!-- The primary control attached to the select directive -->
+  <input 
+    tuiSelect 
+    placeholder="wybierz status1 ..." 
+    formControlName="status" 
+    [readonly]="true"
+  />
+
+  <!-- The dropdown menu container built by Taiga UI -->
+  <tui-data-list-wrapper
+    *tuiDropdown
+    [items]="dropdownStatus()"
+   
+  ></tui-data-list-wrapper>
+</tui-textfield>
+  </div>
+
+    <tui-textfield tuiChevron [stringify]="stringifyTarget">
+      <label tuiLabel>Miejsce docelowe</label>
+      
+      <!-- The primary control attached to the select directive -->
+      <input 
+        tuiComboBox
+        placeholder="Miejsce docelowe ..." 
+        formControlName="target" 
+        [strict]="false"
+       
+      />
+
+      <!-- The dropdown menu container built by Taiga UI -->
+      <tui-data-list-wrapper
+        *tuiDropdown
+        [items]="dropdownTarget() | tuiFilterByInput"
+      ></tui-data-list-wrapper>
+    </tui-textfield>
+
+
+
+    <!-- Start Picker Component -->
+    <!-- <tui-textfield class="form-row">
+      <label tuiLabel>Data utworzenia zlecenia </label>
+      <input tuiInputDateTime formControlName="dateOfOrder" [readOnly]="true"/>     
+    </tui-textfield> -->
+
+<div class="row">
+    <!-- Start Picker Component -->
+    <tui-textfield class="form-row">
+      <label tuiLabel>Data i godzina początkowa</label>
+      <input tuiInputDateTime formControlName="start" placeholder="Rozpoczęcie"/>
+      <tui-calendar *tuiDropdown />
+    </tui-textfield>
+
+    <!-- End Picker Component -->
+    <tui-textfield class="form-row">
+      <label tuiLabel>Data i godzina końcowa</label>
+      <input tuiInputDateTime formControlName="end" placeholder="Zakończenie"/>
+      <tui-calendar *tuiDropdown />
+    </tui-textfield>
+</div>
+
+
+
+	@let itemsJos = itemsJos$ | async;
+	<tui-textfield tuiChevron [stringify]="stringifyJOS">
+	    <input
+	        #inputRef
+	        placeholder="Wyszukaj JOS"
+	        tuiComboBox
+	        formControlName="jos"
+	        (input)="searchJos$.next($any($event.target).value)"
+	    />
+	 
+	    <tui-data-list-wrapper
+	        *tuiDropdown
+	        [emptyContent]="inputRef.value.length < 3  ? 'Wpisz na najmniej 3 znaki' : 'Brak !!!'"
+	        [items]="inputRef.value.length < 3 ? [] : itemsJos"
+	    />
+	 
+	    @if (itemsJos && showLoader()) {
+	        <tui-loader />
+	    }
+	</tui-textfield>
+
+
+
+    
+
+    <div class="dialog-actions">
+      <button tuiButton type="button" appearance="secondary" size="m" (click)="observer.complete()">
+        Anuluj
+      </button>
+      <button tuiButton type="submit" size="m" [disabled]="eventForm.invalid">
+        Zapisz
+      </button>
+    </div>
+  </form>
+
+  
+	 
+</ng-template>

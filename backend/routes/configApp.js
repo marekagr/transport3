@@ -1,0 +1,34 @@
+import express from "express";
+import ConfigApp from '../models/ConfigApp.js';
+import '../models/Car.js'
+
+const router = express.Router();
+
+// GET: Fetch all configuration records
+router.get('/', async (req, res) => {
+  try {
+    const configApp = await ConfigApp.find().populate('defaultCar.car');
+    res.status(200).json(configApp);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server error',
+      error: error.message,
+    });
+  }
+});
+
+// POST: Create a new configuration record
+router.post('/', async (req, res) => {
+  try {
+    const newConfig = new ConfigApp(req.body);
+    const savedConfig = await newConfig.save();
+    res.status(201).json(savedConfig);
+  } catch (error) {
+    res.status(400).json({
+      message: 'Invalid data',
+      error: error.message,
+    });
+  }
+});
+
+export default router;
